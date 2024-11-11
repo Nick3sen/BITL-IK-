@@ -1,23 +1,27 @@
 import RPi.GPIO as GPIO
 from time import sleep
 #------------------------- Define variables
-servo_1 = 3
+servopins = {1: 3, 2: 5, 3: 7}
 #------------------------- Setup GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) #Pinmode set to board /pinout in terminal
-GPIO.setup(servo_1, GPIO.OUT) #Set pin on output
-p = GPIO.PWM(servo_1, 50) #pin + frequency
-p.start(0)
+servopwm = {}
+
+for servo, pin in servopins.items():
+    GPIO.setup(pin, GPIO.OUT) #Set pin on output
+    p = GPIO.PWM(pin, 50) #pin + frequency
+    p.start(0)
+    servopwm[servo] = p
 
 #------------------------ calculate dutycycle to angle
-def angle(x):
+def angle(index, x):
     if x > 180 or x < 0:
         print("angle doesn't exist")
         return
     duty = x / 18 + 3
-    p.ChangeDutyCycle(duty)
+    servopwm[index].ChangeDutyCycle(duty)
 #------------------------ code
-angle(180)
+angle(1, 180)
 sleep(1)
-angle(0)
+angle(1, 0)
 sleep(1)
