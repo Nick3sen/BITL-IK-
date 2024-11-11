@@ -20,7 +20,7 @@ def angle(y,x):
     duty = x / 18 + 3
     p.ChangeDutyCycle(duty)
 #------------------------ code
-angle(servo_1, 180)
+angle(3 , 180)
 sleep(1)
-angle(servo_1, 0)
+angle(3 ,0)
 sleep(1)
