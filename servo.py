@@ -17,8 +17,7 @@ def angle(x):
     duty = x / 18 + 3
     p.ChangeDutyCycle(duty)
 #------------------------ code
-while True:
-    angle(180)
-    sleep(1)
-    angle(0)
-    sleep(1)
+angle(180)
+sleep(1)
+angle(0)
+sleep(1)
