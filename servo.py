@@ -3,7 +3,7 @@ from time import sleep
 #------------------------- Define variables
 servo_1 = 3
 #------------------------- Setup GPIO
-
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) #Pinmode set to board /pinout in terminal
 GPIO.setup(servo_1, GPIO.OUT) #Set pin on output
 p = GPIO.PWM(servo_1, 50) #pin + frequency
