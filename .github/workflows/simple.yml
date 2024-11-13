@@ -11,7 +11,7 @@ jobs:
   BITL:
     runs-on: self-hosted
     steps:
-      # - uses: actions/checkout@v4
+      # checks out repository /home/nick/actions-runner/_work
       - name: Check out repository code
         uses: actions/checkout@v4
 
