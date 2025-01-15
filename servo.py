@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 #------------------------- Define servo index for each pin
-servopins = {1: 3, 2: 5, 3: 7}
+servopins = {1: 3, 2: 35, 3: 37}
 #------------------------- Setup GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD) #Pinmode set to board /pinout in terminal
@@ -21,10 +21,10 @@ def angle(index, x):
     duty = x / 18 + 3
     servopwm[index].ChangeDutyCycle(duty)
 #------------------------ code
-angle(1, 180)
-sleep(1)
-angle(1, 0)
-sleep(1)
+angle(2, 90)
+# sleep(1)
+angle(3, 90)
+# sleep(1)
 
 #/general information
 # Raspberry pi shutdown => connect pin 5 and 6 (GPIO and GND)
