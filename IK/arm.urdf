@@ -1,0 +1,95 @@
+<robot name="Patrick">
+  <link name="Base">
+    <visual>
+        <origin xyz="0.0 0.0 0.0017" rpy="0.0 0.0 0.0"/>
+    <geometry>
+        <cylinder radius="0.20" length="0.035"/>
+     </geometry>
+    </visual>   
+ </link>
+
+ <link name="Arm_base">
+    <visual>
+      <color rgba="0.0 0.0 1.0 0.0"/>
+    <geometry>
+        <cylinder radius="0.06" length="0.10"/>    
+     </geometry>
+    </visual>
+  </link>
+
+  <joint name="BaseJoint" type="revolute">
+    <parent link="Base"/>
+    <child link="Arm_base"/>
+    <origin xyz="0.0 0.0 0.067" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0.0 0.0 -1"/>   
+  </joint>
+
+  <link name="Lower_arm">
+    <visual>
+        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+        <geometry>
+            <cylinder radius="0.03" length="0.15"/>
+        </geometry>
+    </visual>
+  </link>
+
+  <joint name="Lower_joint" type="revolute">
+    <parent link="Arm_base"/>
+    <child link="Lower_arm"/>
+    <origin xyz="0.0 0.0 0.05"/>
+    <axis xyz="1 0.0 0.0"/>
+    <limit lower="-1.57" upper="1.57"/>
+  </joint>
+
+  <link name="Upper_arm">
+    <visual>
+        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+    <geometry>
+            <cylinder radius="0.03" length="0.15"/>
+    </geometry>
+    </visual>
+  </link>
+
+  <joint name="Upper_joint" type="revolute">
+  <parent link="Lower_arm"/>
+  <child link="Upper_arm"/>
+  <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0"/>
+  <axis xyz="1 0.0 0.0"/>
+  <limit lower="-1.57" upper="1.57"/>
+  </joint>
+
+  <link name="Gripper">
+    <visual>
+        <origin xyz="0.0 0.0 0.0250" rpy="0.0 0.0 0.0"/>
+        <geometry>
+            <box size="0.05 0.05 0.05"/>
+        </geometry>
+    </visual>
+  </link>
+
+    <joint name="Arm_joint" type="revolute">
+    <parent link="Upper_arm"/>
+    <child link="Gripper"/>
+    <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0"/>
+    <axis xyz="1 0.0 0"/>
+    <limit lower="-1.57" upper="1.57"/>
+    </joint>
+
+  <link name="Gripper_rotation">
+    <visual>
+        <origin xyz="0.0 0.0 0.001" rpy="0.0 0.0 0.0"/>
+        <geometry>
+            <box size="0.06 0.07 0.02"/>
+        </geometry>
+    </visual>
+  </link>
+
+    <joint name="Arm_rotation" type="revolute">
+    <parent link="Gripper"/>
+    <child link="Gripper_rotation"/>
+    <origin xyz="0.0 0.0 0.06" rpy="0.0 0.0 0.0"/>
+    <axis xyz="0 0.0 1"/>
+    <limit lower="-1.57" upper="1.57"/>
+    </joint>
+        
+</robot> 
