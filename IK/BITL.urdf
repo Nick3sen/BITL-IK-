@@ -1,5 +1,5 @@
 <robot name="Patrick">
-  <link name="Base">
+  <link name="base_link">
     <visual>
         <origin xyz="0.0 0.0 0.0017" rpy="0.0 0.0 0.0"/>
     <geometry>
@@ -18,7 +18,7 @@
   </link>
 
   <joint name="BaseJoint" type="revolute">
-    <parent link="Base"/>
+    <parent link="base_link"/>
     <child link="Arm_base"/>
     <origin xyz="0.0 0.0 0.067" rpy="0.0 0.0 0.0"/>
     <axis xyz="0.0 0.0 -1"/>   
