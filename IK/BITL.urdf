@@ -21,7 +21,8 @@
     <parent link="base_link"/>
     <child link="Arm_base"/>
     <origin xyz="0.0 0.0 0.067" rpy="0.0 0.0 0.0"/>
-    <axis xyz="0.0 0.0 -1"/>   
+    <axis xyz="0.0 0.0 -1"/>  
+    <limit lower="-1.57" upper="1.57"/> 
   </joint>
 
   <link name="Lower_arm">
