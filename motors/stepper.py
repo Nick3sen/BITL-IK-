@@ -7,7 +7,7 @@ in3=13
 in4=15
 
 step_sleep = 0.002
-step_count = 4096
+steps = 4096
 direction = False #true is clockwise false is counter clockwise
 
 step_sequence = [[1,0,0,1], # find in documentation 
@@ -38,8 +38,8 @@ def cleanup():
     GPIO.output(in3, GPIO.LOW)
     GPIO.output(in4, GPIO.LOW)
     GPIO.cleanup()
-    
-try:
+
+def stepper(step_count):
     i = 0
     for i in range(step_count):
         for pin in range(0, len(motor_pins)):
@@ -53,6 +53,8 @@ try:
             cleanup()
             exit( 1 )
         time.sleep( step_sleep )
+try:
+    stepper(steps)
 
 except KeyboardInterrupt:
     cleanup()
