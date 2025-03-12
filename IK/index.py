@@ -109,14 +109,16 @@ print("Computed position: %s, original position : %s" % (computed_position[:3, 3
 print("Computed position (readable) : %s" % [ '%.2f' % elem for elem in computed_position[:3, 3] ])
 
 # Plotting the robotic arm
-fig, ax = plot_utils.init_3d_figure()
-fig.set_figheight(9)  
-fig.set_figwidth(13)  
-my_chain.plot(ik, ax, target=target_position)
-plt.xlim(-0.5, 0.5)
-plt.ylim(-0.5, 0.5)
-ax.set_zlim(0, 0.6)
-plt.show()
+def showPlot(): 
+    fig, ax = plot_utils.init_3d_figure()
+    fig.set_figheight(9)
+    fig.set_figwidth(13)  
+    my_chain.plot(ik, ax, target=target_position)
+    plt.xlim(-0.5, 0.5)
+    plt.ylim(-0.5, 0.5)
+    ax.set_zlim(0, 0.6)
+    plt.ion()
+    plt.show(block = True)
 
 # Functions
 def doIK():
@@ -133,22 +135,22 @@ def updatePlot():
     fig.canvas.draw()
     fig.canvas.flush_events()
 
-# Moving function 
-def move(x,y,z):
-    global target_position
-    target_position = [x,y,z]
-    doIK()
-    updatePlot()
-    sendCommand(ik[1].item(),ik[2].item(),ik[3].item(),ik[4].item(),ik[5].item(),ik[6].item(),1)
+# # Moving function 
+# def move(x,y,z):
+#     global target_position
+#     target_position = [x,y,z]
+#     doIK()
+#     updatePlot()
+#     sendCommand(ik[1].item(),ik[2].item(),ik[3].item(),ik[4].item(),ik[5].item(),ik[6].item(),1)
 
-def servo():
-    move(0,0.2,0.3)
+# def servo():
+#     move(0,0.2,0.3)
 
-ser = serial.Serial('COM3',9600, timeout=1)
+# ser = serial.Serial('COM3',9600, timeout=1)
 
-def sendCommand(a,b,c,d,e,f,move_time):
-    command = '0{:.2f} 1{:.2f} 2{:.2f} 3{:.2f} 4{:.2f} 5{:.2f} t{:.2f}\n'.format(math.degrees(a),math.degrees(b),math.degrees(c),math.degrees(d),math.degrees(e),math.degrees(f),move_time)
-    ser.write(command.encode('ASCII'))
+# def sendCommand(a,b,c,d,e,f,move_time):
+#     command = '0{:.2f} 1{:.2f} 2{:.2f} 3{:.2f} 4{:.2f} 5{:.2f} t{:.2f}\n'.format(math.degrees(a),math.degrees(b),math.degrees(c),math.degrees(d),math.degrees(e),math.degrees(f),move_time)
+#     ser.write(command.encode('ASCII'))
 
 # we'll call sendCommand once with a move time of 4s so the robot slowly moves to the initial point
 sendCommand(ik[1].item(),ik[2].item(),ik[3].item(),ik[4].item(),ik[5].item(),ik[6].item(),4)
