@@ -25,7 +25,7 @@ target_position = [ 0.1, 0.2,0.02]
 target_orientation = [0, 0, 0]
 
 # calculating the right angles
-ik = my_chain.inverse_kinematics(target_position, target_orientation, orientation_mode="Y")
+ik = my_chain.inverse_kinematics(target_position, target_orientation, orientation_mode="all")
 angles = list(map(lambda r:math.degrees(r),ik.tolist()))
 print("The angles of each joints are : ", angles)
 

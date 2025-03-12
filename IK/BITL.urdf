@@ -1,9 +1,10 @@
 <robot name="Patrick">
   <link name="base_link">
     <visual>
-        <origin xyz="0.0 0.0 0.0017" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.005" rpy="0.0 0.0 0.0"/>
+        <color rgba="0.0 0.0 1.0 0.0"/>
     <geometry>
-        <cylinder radius="0.20" length="0.035"/>
+        <cylinder radius="0.20" length="0.01"/>
      </geometry>
     </visual>   
  </link>
@@ -12,7 +13,7 @@
     <visual>
       <color rgba="0.0 0.0 1.0 0.0"/>
     <geometry>
-        <cylinder radius="0.06" length="0.10"/>    
+        <cylinder radius="0.06" length="0.087"/>    
      </geometry>
     </visual>
   </link>
@@ -20,16 +21,16 @@
   <joint name="BaseJoint" type="revolute">
     <parent link="base_link"/>
     <child link="Arm_base"/>
-    <origin xyz="0.0 0.0 0.067" rpy="0.0 0.0 0.0"/>
+    <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
     <axis xyz="0.0 0.0 -1"/>  
     <limit lower="-2.356" upper="2.356"/> 
   </joint>
 
   <link name="Lower_arm">
     <visual>
-        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0775" rpy="0.0 0.0 0.0"/>
         <geometry>
-            <cylinder radius="0.03" length="0.15"/>
+            <cylinder radius="0.03" length="0.155"/>
         </geometry>
     </visual>
   </link>
@@ -37,16 +38,16 @@
   <joint name="Lower_joint" type="revolute">
     <parent link="Arm_base"/>
     <child link="Lower_arm"/>
-    <origin xyz="0.0 0.0 0.05"/>
+    <origin xyz="0.0 0.0 0.044"/>
     <axis xyz="1 0.0 0.0"/>
     <limit lower="0" upper="1.57"/>
   </joint>
 
   <link name="Upper_arm">
     <visual>
-        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.06" rpy="0.0 0.0 0.0"/>
     <geometry>
-            <cylinder radius="0.03" length="0.15"/>
+            <cylinder radius="0.03" length="0.12"/>
     </geometry>
     </visual>
   </link>
@@ -58,7 +59,7 @@
   <axis xyz="1 0.0 0.0"/>
   <limit lower="0" upper="1.57"/>
   </joint>
-
+<!-- 
   <link name="Gripper">
     <visual>
         <origin xyz="0.0 0.0 0.0250" rpy="0.0 0.0 0.0"/>
@@ -92,5 +93,5 @@
     <axis xyz="0 0.0 1"/>
     <limit lower="-1.57" upper="1.57"/>
     </joint>
-        
+         -->
 </robot> 
