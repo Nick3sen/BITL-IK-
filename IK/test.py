@@ -20,6 +20,7 @@ print(myfile)
 motorpins = {1: 3, 2: 35, 3: 37}
 
 # Creating IK chain
+active_links_mask = [True, True, True]
 my_chain = ikpy.chain.Chain.from_urdf_file(myfile)
 target_position = [ 0.1, 0.2,0.02]
 target_orientation = [0, 0, 0]
