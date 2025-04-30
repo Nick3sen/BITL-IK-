@@ -39,13 +39,12 @@ def read_from_device(device):
 # Main loop
 try:
     while True:
-        send_to_device(gripper, "Command to Arduino 1")
-        send_to_device(crane, "Command to Arduino 2")
         read_from_device(gripper)
         read_from_device(crane)
+        read_from_device(laptop)
 
 except KeyboardInterrupt:
     print("Exiting...")
     gripper.close()
     crane.close()
-    # laptop.close()
+    laptop.close()

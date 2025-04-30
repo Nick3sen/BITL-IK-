@@ -9,7 +9,7 @@ import time
 # Define serial ports for each device
 gripper = serial.Serial("/dev/ttyUSB0", 9600)  # Replace with your Arduino port
 crane = serial.Serial("/dev/ttyACM0", 9600)  # Replace with your Arduino port
-laptop = serial.Serial("/dev/ttyUSB2", 9600)  # Replace with your laptop port
+# laptop = serial.Serial('/dev/ttyUSB2', 9600)    # Replace with your laptop port
 
 # Wait for connections to establish
 time.sleep(2)
@@ -25,11 +25,13 @@ def read_from_device(device):
         data = (
             device.readline().decode("utf-8", errors="ignore").strip()
         )  # Read and decode the data
+        #        print(data)
+        #        print(type(data))
         dataParts = parse_data(data)
-        if dataParts[1] == 'move':
+        if dataParts[1] == "move":
             print("crane")
             send_to_device(crane, dataParts[3 - 6])
-        elif dataParts[1] == 'ID':
+        elif dataParts[1] == "ID":
             print("laptop")
             send_to_device(laptop, dataParts[3])
         data = ""
@@ -47,13 +49,15 @@ def parse_data(data):
 
 
 # Main loop
+
 try:
     while True:
 
         read_from_device(gripper)
 
+
 except KeyboardInterrupt:
     print("Exiting...")
     gripper.close()
     crane.close()
-    laptop.close()
+    # laptop.close()

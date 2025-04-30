@@ -1,6 +1,8 @@
 #include "BITL.h"
 
-BITL nano("nano", 9600);
+BITL grijper("grijper", 9600);
+
+// kraan en grijper
 
 int ledGreen = 5;
 int ledRed = 2;
@@ -18,7 +20,7 @@ void setup(){
 
 void loop() {
   if (digitalRead(button)== HIGH){
-    nano.sendPos("gripper", 2, 1, 4, 2);
+    kaas.sendPos("gripper", 2, 1, 4, 2);
     digitalWrite(ledGreen, HIGH);
     delay(200);
     digitalWrite(ledGreen, LOW);
