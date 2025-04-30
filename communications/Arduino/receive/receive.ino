@@ -1,6 +1,6 @@
 #include "BITL.h"
 
-BITL nano("crane", 9600);
+BITL grijper("grijper", 9600);
 
 int ledGreen = 5;
 int ledRed = 2;
