@@ -13,14 +13,29 @@ gripper = serial.Serial("/dev/ttyUSB0", 9600)  # Replace with your Arduino port
 crane = serial.Serial("/dev/ttyACM0", 9600)  # Replace with your Arduino port
 laptop = serial.Serial("/dev/ttyUSB2", 9600)  # Replace with your laptop port
 
-#GPIO setup
+# GPIO setup
 GPIO.setmode(GPIO.BCM)
 BUTTON_PIN = 17
 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-button_state = 0
 
 # Wait for connections to establish
 time.sleep(2)
+
+
+def check_button_state(pin=BUTTON_PIN, current_state=0):
+    """
+    Checks the button once. Returns updated state (0 or 1).
+    """
+    if GPIO.input(pin) == GPIO.LOW:
+        if current_state == 0:
+            print("Button pressed! Value set to 1")
+            time.sleep(0.3)  # Debounce
+            return 1
+    else:
+        if current_state == 1:
+            print("Button released. Value reset to 0")
+            return 0
+    return current_state
 
 
 def send_to_device(device, message):
@@ -57,7 +72,13 @@ def parse_data(data):
 # Main loop
 
 try:
+    button_state = 0
+
     while True:
+        # Project start, sending str start to crane
+        button_state = check_button_state(current_state=button_state)
+        if button_state == 1:
+            send_to_device(crane, "start")
 
         read_from_device(gripper)
 
