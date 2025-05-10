@@ -16,11 +16,12 @@ void setup(){
     pinMode(ledRed, OUTPUT);
     pinMode(button, INPUT);
     Serial.begin(9600);
+    Serial.println('READY');
 }
 
 void loop() {
   if (digitalRead(button)== HIGH){
-    kaas.sendPos("gripper", 2, 1, 4, 2);
+    grijper.sendPos("gripper", 3, 0, 3, 0);
     digitalWrite(ledGreen, HIGH);
     delay(200);
     digitalWrite(ledGreen, LOW);

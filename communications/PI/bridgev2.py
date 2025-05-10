@@ -40,6 +40,7 @@ def check_button_state(pin=BUTTON_PIN, current_state=0):
 
 def send_to_device(device, message):
     device.write((message + "\n").encode())
+    print(message, device)
     time.sleep(0.1)
 
 
@@ -49,15 +50,19 @@ def read_from_device(device):
             device.readline().decode("utf-8", errors="ignore").strip()
         )  # Read and decode the data
         dataParts = parse_data(data)
-        if dataParts[1] == "move":
-            print("crane")
-            send_to_device(crane, dataParts[3 - 6])
-        elif dataParts[1] == "ID":
-            print("laptop")
-            send_to_device(laptop, dataParts[3])
-        data = ""
-        dataParts = []
-        return
+        if len(dataParts) == 1:
+            return 
+        else: 
+            if dataParts[1] == "move":
+                print("crane")
+                send_to_device(crane, ' '.join(dataParts[3:7]))
+                print(dataParts[3:7])
+            elif dataParts[1] == "ID":
+                print("laptop")
+                send_to_device(laptop, dataParts[3])
+            data = ""
+            dataParts = []
+            return
 
 
 def parse_data(data):
@@ -72,15 +77,17 @@ def parse_data(data):
 # Main loop
 
 try:
+    default = ['-2', '0', '-2', '0']
     button_state = 0
 
     while True:
         # Project start, sending str start to crane
         button_state = check_button_state(current_state=button_state)
         if button_state == 1:
-            send_to_device(crane, "start")
+            send_to_device(crane, ' '.join(default))
 
         read_from_device(gripper)
+        read_from_device(laptop)
 
 
 except KeyboardInterrupt:
