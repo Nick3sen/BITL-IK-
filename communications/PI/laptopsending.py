@@ -1,20 +1,16 @@
-# laptop_sender.py
+# laptop_send.py
 import serial
 import time
 
-# Change this to the correct port for your laptop
-SERIAL_PORT = '/dev/ttyUSB0'  # or 'COMx' on Windows
-BAUD_RATE = 9600
-
-ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
-time.sleep(2)  # wait for the serial connection to initialize
+# Replace 'COMx' with the actual COM port the CP2102 is using (e.g., 'COM4')
+ser = serial.Serial('COM25', 9600, timeout=1)
+time.sleep(2)  # Wait for connection to establish
 
 try:
     while True:
-        message = "Hello from Laptop!\n"
-        ser.write(message.encode('utf-8'))
-        print(f"Sent: {message.strip()}")
-        time.sleep(1)
+        message = input("Enter message to send to Raspberry Pi: ")
+        ser.write((message + '\n').encode())
+        print("Message sent.")
 except KeyboardInterrupt:
+    print("Closing connection.")
     ser.close()
-    print("Connection closed.")

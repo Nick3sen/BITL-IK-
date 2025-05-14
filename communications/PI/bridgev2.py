@@ -9,9 +9,9 @@ import RPi.GPIO as GPIO
 import time
 
 # Define serial ports for each device
-gripper = serial.Serial("/dev/ttyUSB0", 9600)  # Replace with your Arduino port
+gripper = serial.Serial("/dev/ttyACM1", 9600)  # Replace with your Arduino port
 crane = serial.Serial("/dev/ttyACM0", 9600)  # Replace with your Arduino port
-laptop = serial.Serial("/dev/ttyUSB2", 9600)  # Replace with your laptop port
+laptop = serial.Serial("/dev/serial0", 9600)  # Replace with your laptop port
 
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -59,6 +59,7 @@ def read_from_device(device):
                 print(dataParts[3:7])
             elif dataParts[1] == "ID":
                 print("laptop")
+                print(dataParts[3])
                 send_to_device(laptop, dataParts[3])
             data = ""
             dataParts = []
@@ -81,13 +82,15 @@ try:
     button_state = 0
 
     while True:
+        read_from_device(gripper)
+        read_from_device(laptop)
+        print("crane:" + crane.readline().decode().strip())
+        print("gripper" + gripper.readline().decode().strip())
         # Project start, sending str start to crane
         button_state = check_button_state(current_state=button_state)
         if button_state == 1:
             send_to_device(crane, ' '.join(default))
 
-        read_from_device(gripper)
-        read_from_device(laptop)
 
 
 except KeyboardInterrupt:
