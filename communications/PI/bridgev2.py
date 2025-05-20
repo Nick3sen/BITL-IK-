@@ -51,11 +51,12 @@ def read_from_device(device):
         )  # Read and decode the data
         dataParts = parse_data(data)
         if len(dataParts) == 1:
-            return 
-        else: 
+            return
+        # checks the data for keyword
+        else:
             if dataParts[1] == "move":
                 print("crane")
-                send_to_device(crane, ' '.join(dataParts[3:7]))
+                send_to_device(crane, " ".join(dataParts[3:7]))
                 print(dataParts[3:7])
             elif dataParts[1] == "ID":
                 print("laptop")
@@ -78,7 +79,7 @@ def parse_data(data):
 # Main loop
 
 try:
-    default = ['-2', '0', '-2', '0']
+    default = ["-2", "0", "-2", "0"]
     button_state = 0
 
     while True:
@@ -89,8 +90,7 @@ try:
         # Project start, sending str start to crane
         button_state = check_button_state(current_state=button_state)
         if button_state == 1:
-            send_to_device(crane, ' '.join(default))
-
+            send_to_device(crane, " ".join(default))
 
 
 except KeyboardInterrupt:
