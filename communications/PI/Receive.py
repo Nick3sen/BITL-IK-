@@ -2,7 +2,7 @@ import serial
 import time
 
 # Set up serial connection
-arduino = serial.Serial('/dev/ttyAMC0', 9600)  # Replace '/dev/ttyUSB0' with the actual port
+arduino = serial.Serial('/dev/serial0', 9600)  # Replace '/dev/ttyUSB0' with the actual port
 
 # Allow time for the connection to establish
 time.sleep(2)

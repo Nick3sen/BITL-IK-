@@ -7,10 +7,10 @@ import serial
 import time
 import RPi.GPIO as GPIO
 import time
-   
+
 # Define serial ports for each device
-gripper = serial.Serial("/dev/ttyACM1", 9600)  # Replace with your Arduino port
-crane = serial.Serial("/dev/ttyACM0", 9600)  # Replace with your Arduino port
+gripper = serial.Serial("/dev/ttyACM0", 9600)  # Replace with your Arduino port
+crane = serial.Serial("/dev/ttyACM1", 9600)  # Replace with your Arduino port
 laptop = serial.Serial("/dev/serial0", 9600)  # Replace with your laptop port
 
 # GPIO setup
@@ -71,8 +71,8 @@ def parse_data(data):
     # Split the data into individual components
     dataParts = data.split()
     print(dataParts)
-    for i in range(len(dataParts)):
-        print(dataParts[i])
+    #for i in range(len(dataParts)):
+    #    print(dataParts[i])
     return dataParts
 
 
@@ -85,8 +85,11 @@ try:
     while True:
         read_from_device(gripper)
         read_from_device(laptop)
-        print("crane:" + crane.readline().decode().strip())
-        print("gripper" + gripper.readline().decode().strip())
+        if crane.in_waiting > 0:
+            print("crane:" + crane.readline().decode("utf-8", errors="ignore").strip())
+        if gripper.in_waiting > 0:
+            print("gripper:" + gripper.readline().decode("utf-8", errors="ignore").strip())
+
         # Project start, sending str start to crane
         button_state = check_button_state(current_state=button_state)
         if button_state == 1:

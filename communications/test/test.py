@@ -1,22 +1,29 @@
-# laptop_echo_client.py
 import serial
 import time
 
-# Replace COM25 with your actual port from Device Manager
-ser = serial.Serial('COM25', 9600, timeout=1)
-time.sleep(2)
+# Change this to match your serial port name:
+# Windows: COM3, COM4, etc.
+# macOS/Linux: /dev/ttyUSB0, /dev/ttyACM0, /dev/cu.usbserial, etc.
+PORT = 'COM25'  # Replace with your actual port (e.g., '/dev/ttyUSB0')
+BAUD_RATE = 9600
 
 try:
-    while True:
-        message = input("Enter message to send to Raspberry Pi: ")
-        ser.write((message + '\n').encode())
-        print("Message sent. Waiting for echo...")
+    ser = serial.Serial(PORT, BAUD_RATE, timeout=1)
+    print(f"Connected to {PORT} at {BAUD_RATE} baud.")
 
-        # Wait for echo
-        time.sleep(0.5)  # Give Pi time to respond
-        if ser.in_waiting > 0:
-            response = ser.readline().decode('utf-8', errors='ignore').strip()
-            print(f"Echo from Pi: {response}")
+    while True:
+        if ser.in_waiting:
+            line = ser.readline().decode('utf-8', errors='ignore').strip()
+            print(f"Received: {line}")
+        time.sleep(0.1)
+
+except serial.SerialException as e:
+    print(f"Serial error: {e}")
+
 except KeyboardInterrupt:
-    print("Closing connection.")
-    ser.close()
+    print("\nInterrupted by user.")
+
+finally:
+    if 'ser' in locals() and ser.is_open:
+        ser.close()
+        print("Serial port closed.")
